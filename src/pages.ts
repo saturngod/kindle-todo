@@ -1,6 +1,6 @@
 // Server-rendered HTML pages for the Kindle 5.16 experimental browser.
 // Plain HTML + inline CSS, no external assets, works with JS disabled.
-// Layout uses basic block elements and floats only (old WebKit safe).
+// Layout uses basic block elements only, full-width fluid (old WebKit safe).
 
 import type { Todo } from './db';
 
@@ -14,51 +14,58 @@ function escapeHtml(str: string): string {
 }
 
 const STYLES = `
-  * { margin: 0; padding: 0; }
+  * {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  html, body {
+    width: 100%;
+  }
   body {
     font-family: Georgia, serif;
     background: #ffffff;
     color: #000000;
-    font-size: 18px;
-    line-height: 1.5;
+    font-size: 16px;
+    line-height: 1.4;
   }
   .wrap {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 16px;
+    width: 100%;
+    padding: 8px;
   }
   h1 {
-    font-size: 26px;
-    padding: 12px 0;
-    border-bottom: 3px solid #000000;
-    margin-bottom: 16px;
+    font-size: 20px;
+    padding: 6px 0;
+    border-bottom: 2px solid #000000;
+    margin-bottom: 10px;
   }
   .error {
     border: 2px solid #000000;
-    padding: 12px;
-    margin-bottom: 16px;
+    padding: 8px;
+    margin-bottom: 10px;
     font-weight: bold;
   }
   label {
     display: block;
     font-weight: bold;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   input[type="text"], input[type="password"] {
     display: block;
-    width: 95%;
-    font-size: 18px;
-    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    padding: 8px;
     border: 2px solid #000000;
     background: #ffffff;
     color: #000000;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
   }
   button, input[type="submit"] {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    padding: 10px 18px;
-    min-height: 44px;
+    padding: 8px 14px;
+    min-height: 40px;
     border: 2px solid #000000;
     background: #ffffff;
     color: #000000;
@@ -69,14 +76,13 @@ const STYLES = `
   }
   .todo {
     border: 2px solid #000000;
-    padding: 10px;
-    margin-bottom: 10px;
-    overflow: hidden;
+    padding: 8px;
+    margin-bottom: 8px;
   }
   .todo-title {
     display: block;
-    padding: 8px 4px;
-    font-size: 18px;
+    padding: 4px 2px;
+    font-size: 16px;
     word-wrap: break-word;
   }
   .todo-done .todo-title {
@@ -84,39 +90,39 @@ const STYLES = `
     color: #555555;
   }
   .todo-actions {
-    margin-top: 8px;
+    margin-top: 6px;
     border-top: 1px solid #999999;
-    padding-top: 8px;
+    padding-top: 6px;
   }
   .inline-form {
     display: inline;
   }
   .inline-form button {
-    margin-right: 8px;
+    margin-right: 6px;
   }
   .topbar {
-    overflow: hidden;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
+    text-align: right;
   }
   .topbar form {
-    float: right;
+    display: inline;
   }
   .add-form {
     border: 2px solid #000000;
-    padding: 12px;
-    margin-bottom: 20px;
+    padding: 8px;
+    margin-bottom: 12px;
   }
   .add-form input[type="text"] {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .empty {
-    padding: 20px 0;
+    padding: 14px 0;
     text-align: center;
     font-style: italic;
   }
   .count {
-    margin-bottom: 12px;
-    font-size: 16px;
+    margin-bottom: 8px;
+    font-size: 14px;
     color: #333333;
   }
 `;
@@ -126,7 +132,7 @@ function layout(title: string, body: string): string {
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>${escapeHtml(title)}</title>
 <style>${STYLES}</style>
 </head>
