@@ -107,6 +107,9 @@ const STYLES = `
   .topbar form {
     display: inline;
   }
+  .topbar button {
+    margin-left: 6px;
+  }
   .add-form {
     border: 2px solid #000000;
     padding: 8px;
@@ -187,6 +190,9 @@ export function todosPage(todos: Todo[]): string {
   return layout(
     'Todos - Kindle Todo',
     `<div class="topbar">
+  <form method="GET" action="/">
+    <button type="submit">Refresh</button>
+  </form>
   <form method="POST" action="/logout">
     <button type="submit">Log out</button>
   </form>
