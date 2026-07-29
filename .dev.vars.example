@@ -1,0 +1,4 @@
+# Copy this file to .dev.vars for local development (never commit .dev.vars)
+AUTH_USERNAME=admin
+AUTH_PASSWORD=changeme
+SESSION_SECRET=a-long-random-string-change-me
